@@ -4,10 +4,11 @@ using UnityEngine;
 namespace Environment {
     public class Computer : MonoBehaviour, IInteractable {
         [SerializeField]
-        private Task testTask = null; // Put your stack/queue here :)
+        private Task loginTask = null; // Put your stack/queue here :)
 
         public void OnInteract() {
-            testTask.Execute();
+            Debug.Log("Executing task");
+            loginTask.Execute();
         }
     }
 }
