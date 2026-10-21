@@ -2,13 +2,12 @@
 using Utils;
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Environment {
     public class Computer : MonoBehaviour, IInteractable {
-        [SerializeField]
-        private Task loginTask = null; // Put your stack/queue here :)
 
-        [SerializeField] private JsonReader jsonReader;
+        private GenericQueue<Task> taskQueue = null;
 
         [Serializable]
         public struct Employee {
@@ -26,7 +25,6 @@ namespace Environment {
         }
 
         public void OnInteract() {
-
 
         }
     }
