@@ -1,0 +1,32 @@
+{
+  "employees": [
+    {
+      "name": "Alfred Pugsley",
+      "employeeId": 192,
+      "hasEngineRoomClearance": false,
+      "lastEntranceInEngineRoom": "1970-01-01T00:00:00",
+      "lastExitFromEngineRoom": "1970-01-01T00:00:00"
+    },
+    {
+      "name": "Nem Tudom",
+      "employeeId": 665,
+      "hasEngineRoomClearance": true,
+      "lastEntranceInEngineRoom": "2234-08-09T22:13:17",
+      "lastExitFromEngineRoom": "2234-08-09T22:13:22"
+    },
+    {
+      "name": "Jane Sanchez",
+      "employeeId": 431,
+      "hasEngineRoomClearance": true,
+      "lastEntranceInEngineRoom": "2234-08-09T22:13:12",
+      "lastExitFromEngineRoom": "2234-08-09T22:13:19"
+    },
+    {
+      "name": "Christian Greback",
+      "employeeId": 456,
+      "hasEngineRoomClearance": true,
+      "lastEntranceInEngineRoom": "2234-07-10T19:15:51",
+      "lastExitFromEngineRoom": "2600-07-10T20:15:51"
+    }
+  ]
+}
