@@ -11,7 +11,7 @@ namespace Environment.Tasks {
             computerScreenObj = GameObject.FindWithTag("ComputerScreen");
         }
 
-        public override void Execute() {
+        public override void Execute(GameObject gameObject = null) {
             computerScreenObj.SetActive(true);
         }
     }

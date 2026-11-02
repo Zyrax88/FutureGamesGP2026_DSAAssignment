@@ -228,13 +228,13 @@ namespace Utils {
                         break;
 
                     case SortingCriteria.employeeLastEntrance:
-                        comparison = DateTime.Parse(tempLeft[i].lastEntranceInEngineRoom, System.Globalization.CultureInfo.InvariantCulture)
-                           .CompareTo(DateTime.Parse(tempRight[j].lastEntranceInEngineRoom, System.Globalization.CultureInfo.InvariantCulture)) <= 0;
+                        comparison = DateTime.ParseExact(tempLeft[i].lastEntranceInEngineRoom, "yyyy-MM-ddTHH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+                           .CompareTo(DateTime.ParseExact(tempRight[j].lastEntranceInEngineRoom, "yyyy-MM-ddTHH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)) <= 0;
                         break;
 
                     case SortingCriteria.employeeLastExit:
-                        comparison = DateTime.Parse(tempLeft[i].lastExitFromEngineRoom, System.Globalization.CultureInfo.InvariantCulture)
-                            .CompareTo(DateTime.Parse(tempRight[j].lastExitFromEngineRoom, System.Globalization.CultureInfo.InvariantCulture)) <= 0;
+                        comparison = DateTime.ParseExact(tempLeft[i].lastExitFromEngineRoom, "yyyy-MM-ddTHH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)
+                            .CompareTo(DateTime.ParseExact(tempRight[j].lastExitFromEngineRoom, "yyyy-MM-ddTHH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)) <= 0;
                         break;
 
                     case SortingCriteria.employeeHasAccess:
