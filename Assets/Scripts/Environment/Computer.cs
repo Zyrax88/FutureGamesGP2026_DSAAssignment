@@ -8,7 +8,7 @@ namespace Environment {
     public class Computer : MonoBehaviour, IInteractable {
         [Header("Tasks")]
         [SerializeField]
-        private List<Task> tasksToRun = null;
+        private List<Task> tasksToStart = null;
         [SerializeField]
         private List<Task> shutDownTasks = null;
         Helpers.GenericQueue<Task> genericQueue = null;
@@ -20,45 +20,44 @@ namespace Environment {
 
         private bool poweredOn = false;
 
-        [Serializable]
-        public struct Employee {
-            public string name;
-            public int employeeId;
-            public bool hasEngineRoomClearance;
-            public string lastEntranceInEngineRoom;
-            public string lastExitFromEngineRoom;
-        }
-
-        [Serializable]
-        public struct EmployeesArray {
-            public Employee[] employees;
-        }
-
         public void Start() {  
-            genericQueue = new Helpers.GenericQueue<Task>(tasksToRun);
+            genericQueue = new Helpers.GenericQueue<Task>(tasksToStart);
         }
 
         public void OnInteract() {
             if(!poweredOn) {
 
-                computerUI.SetActive(true);
-                genericQueue.Dequeue().Execute(computerScreen);
-                if(genericQueue.GetCount == 0)
-                {
-                    poweredOn = true;
-                    genericQueue = new Helpers.GenericQueue<Task>(shutDownTasks);
+                foreach(Task t in tasksToStart) {
+                    computerUI.SetActive(true);
+                    genericQueue.Dequeue().Execute(computerScreen);
                 }
+                GameManager.instance.SwitchState<ComputerState>();
+                poweredOn = true;
+
+                genericQueue = new Helpers.GenericQueue<Task>(shutDownTasks);
             }
             else
             {
-                foreach(Task task in shutDownTasks) {
-                    genericQueue.Dequeue().Execute(computerScreen);
-                }
-                if(genericQueue.GetCount == 0) {
+                if(genericQueue.GetCount == 1) {
+                    foreach(Task task in shutDownTasks) {
+                        genericQueue.Dequeue().Execute(computerScreen);
+                    }
                     computerUI.SetActive(false);
                     poweredOn = false;
-                    genericQueue = new Helpers.GenericQueue<Task>(tasksToRun);
+                    GameManager.instance.SwitchState<PlayingState>();
+                    genericQueue = new Helpers.GenericQueue<Task>(tasksToStart);
+                    return;
                 }
+                else {
+                    foreach(Task task in shutDownTasks) {
+                        genericQueue.Dequeue().Execute(computerScreen);
+                    }
+                    poweredOn = false;
+                    genericQueue = new Helpers.GenericQueue<Task>(tasksToStart);
+                    return;
+                }
+
+
             }
         }
     }

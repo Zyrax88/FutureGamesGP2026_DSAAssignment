@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using Utils;
-using static Environment.Computer;
+using static EmployeesData;
 
 
 namespace Environment.Tasks {
@@ -16,6 +16,5 @@ namespace Environment.Tasks {
             Debug.Log("Reading " + jsonFile.name);
             employees = JsonReader.returnJsonObject<EmployeesArray>(jsonFile).employees;
         }
-
     }
 }

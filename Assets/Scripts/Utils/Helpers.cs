@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Rendering;
-using static Environment.Computer;
+using static EmployeesData;
 
 namespace Utils {
     public class Helpers {
@@ -39,11 +40,11 @@ namespace Utils {
         public static class SortingUtils {
             public enum SortingCriteria
             {
-                employeeID,
-                employeeName,
-                employeeLastEntrance,
-                employeeLastExit,
-                employeeHasAccess
+                employeeName = 1,
+                employeeID = 2,
+                employeeHasAccess = 3,
+                employeeLastEntrance = 4,
+                employeeLastExit = 5
             }
 
             public static void Bubblesort(int[] arrayToSort) {
@@ -166,20 +167,20 @@ namespace Utils {
 
             }
 
-            public static void MergeSort(Employee[] arrayToSort, SortingCriteria criteria, int left = 0, int right = -1) {
+            public static void MergeSort(Employee[] arrayToSort, SortingCriteria criteria, int left = 0, int right = -1, bool isDescending = false) {
 
                 if(right == -1) { right = arrayToSort.Length - 1; }
 
                 if(left < right)
                 {
                     int middle = left + ((right - left) / 2);
-                    MergeSort(arrayToSort, criteria, left, middle);
-                    MergeSort(arrayToSort, criteria, middle + 1, right);
-                    Merge(arrayToSort, criteria, left, middle, right);
+                    MergeSort(arrayToSort, criteria, left, middle, isDescending);
+                    MergeSort(arrayToSort, criteria, middle + 1, right, isDescending);
+                    Merge(arrayToSort, criteria, left, middle, right, isDescending);
                 }
             }
 
-            static void Merge(Employee[] inArray, SortingCriteria criteria, int left, int middle, int right) {
+            static void Merge(Employee[] inArray, SortingCriteria criteria, int left, int middle, int right, bool isDescending) {
                 Employee[] tempLeft = inArray[left..(middle + 1)];
                 Employee[] tempRight = inArray[(middle + 1)..(right + 1)];
                 int i = 0, j = 0; int k = left;
@@ -188,7 +189,8 @@ namespace Utils {
 
                 while(i < tempLeft.Length && j < tempRight.Length) {
 
-                    SwitchCheck(criteria, out comparison, inArray, i, j, tempLeft, tempRight);
+                    SwitchCheck(criteria, out comparison, inArray, i, j, tempLeft, tempRight, isDescending);
+                    
 
                     if(comparison) {
                         inArray[k] = tempLeft[i];
@@ -213,18 +215,17 @@ namespace Utils {
                     k++;
                 }
 
-
             }
 
-            static void SwitchCheck(SortingCriteria criteria, out bool comparison, Employee[] inArray, int i, int j, Employee[] tempLeft, Employee[] tempRight)
+            static void SwitchCheck(SortingCriteria criteria, out bool comparison, Employee[] inArray, int i, int j, Employee[] tempLeft, Employee[] tempRight, bool isDescending = false)
             {
                 switch(criteria) {
                     case SortingCriteria.employeeID:
-                        comparison = inArray[i].employeeId <= inArray[j].employeeId;
+                        comparison = tempLeft[i].employeeId <= tempRight[j].employeeId;
                         break;
 
                     case SortingCriteria.employeeName:
-                        comparison = string.Compare(inArray[i].name, inArray[j].name) >= 0;
+                        comparison = string.Compare(tempLeft[i].name, tempRight[j].name) <= 0;
                         break;
 
                     case SortingCriteria.employeeLastEntrance:
@@ -238,11 +239,13 @@ namespace Utils {
                         break;
 
                     case SortingCriteria.employeeHasAccess:
-                        comparison = inArray[i].hasEngineRoomClearance.CompareTo(inArray[j].hasEngineRoomClearance) <= 0;
+                        comparison = tempLeft[i].hasEngineRoomClearance.CompareTo(tempRight[j].hasEngineRoomClearance) <= 0;
                         break;
                     default:
                         throw new ArgumentException("Stupid");
                 }
+
+                if(isDescending) comparison = !comparison;
             }
         }
     }

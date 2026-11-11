@@ -46,6 +46,7 @@ namespace Player {
         }
 
         private void OnInteract(InputAction.CallbackContext context) {
+            if(GameManager.instance.GetCurrentState().GetType() != typeof(PlayingState)) return;
             Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, interactionRange);
             IInteractable interactable = hit.collider?.gameObject.GetComponentInParent<IInteractable>();
             if(interactable != null) {
@@ -53,7 +54,7 @@ namespace Player {
             }
         }
 
-        private void Update() {
+        public void UpdatePlayer() {
             transform.position += (new Vector3(movementInput.x, 0f, movementInput.y)) * (movementSpeed * Time.deltaTime);
         }
 

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using Utils;
-using static Environment.Computer;
+using static EmployeesData;
 
 
 namespace Environment.Tasks {
@@ -12,28 +12,23 @@ namespace Environment.Tasks {
 
         public override void Execute(GameObject gameObject = null) {
 
-            Employee[] employees = readFileTask.employees;
-
-
-            DateTime[] lastExitsIntoEngineRoom = new DateTime[employees.Length];
-
-            foreach(Employee employee in employees) {
-                Debug.Log($"Employee name: {employee.name} \nEmployee ID: {employee.employeeId} \nHas Engine Room Clerance {(employee.hasEngineRoomClearance ? "Yes" : "No")} \n" +
-                    $"Last entered the engine room: {employee.lastEntranceInEngineRoom} \nLast exit from engine room: {employee.lastExitFromEngineRoom}");
-            }
+            //foreach(Employee employee in readFileTask.employees) {
+            //    Debug.Log($"Employee name: {employee.name} \nEmployee ID: {employee.employeeId} \nHas Engine Room Clerance {(employee.hasEngineRoomClearance ? "Yes" : "No")} \n" +
+            //        $"Last entered the engine room: {employee.lastEntranceInEngineRoom} \nLast exit from engine room: {employee.lastExitFromEngineRoom}");
+            //}
 
 
 
             Debug.Log("What would you like to sort?");
 
-            Debug.Log("Sorting employees by their last exit to the engine room");
+            Debug.Log("Sorting employees by their last entrance to the engine room");
 
-            Helpers.SortingUtils.MergeSort(employees, Helpers.SortingUtils.SortingCriteria.employeeLastEntrance);
+            Helpers.SortingUtils.MergeSort(readFileTask.employees, Helpers.SortingUtils.SortingCriteria.employeeLastEntrance);
 
-            for(int i = 0; i < employees.Length; i++)
-            {
-                Debug.Log(employees[i].name + " " + employees[i].lastEntranceInEngineRoom);
-            }
+            //for(int i = 0; i < readFileTask.employees.Length; i++)
+            //{
+            //    Debug.Log(readFileTask.employees[i].name + " " + readFileTask.employees[i].lastEntranceInEngineRoom);
+            //}
         }
 
     }
