@@ -25,7 +25,6 @@ public class HashMap
         }
         Debug.Log(value.differenceTimeSpan.Duration().TotalMinutes);
         return (int)(value.differenceTimeSpan.Duration().TotalMinutes % hashMap.Length);
-        
     }
 
     public List<StoredEmployee>[] GetHashMap() {

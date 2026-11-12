@@ -5,8 +5,7 @@ using UnityEngine.Rendering;
 using static EmployeesData;
 
 namespace Utils {
-    public static class TreeUtil
-    {
+    public static class TreeUtil {
 
         private class Node {
             public DateTime value;
@@ -23,7 +22,7 @@ namespace Utils {
             Node[] nodes;
 
             Tree(DateTime[] inArray) {
-                root = new Node(inArray[(inArray.Length/2)-1]);
+                root = new Node(inArray[(inArray.Length / 2) - 1]);
                 nodes[0] = root;
                 Create(inArray);
             }
@@ -34,7 +33,7 @@ namespace Utils {
                 Node[] nodes;
 
                 if(root == null) {
-                    root = new Node(e[(e.Length/2)-1]);
+                    root = new Node(e[(e.Length / 2) - 1]);
                 }
 
                 nodes = new Node[e.Length];
@@ -60,7 +59,7 @@ namespace Utils {
                 foreach(Node node in nodes) {
                     Debug.Log(node.value);
                 }
-                
+
             }
         }
 
@@ -70,8 +69,7 @@ namespace Utils {
             public BSTNode? left;
             public BSTNode? right;
 
-            public BSTNode(DateTime inValue)
-            {
+            public BSTNode(DateTime inValue) {
                 this.value = inValue;
             }
 
@@ -110,7 +108,7 @@ namespace Utils {
                 }
             }
 
-            public string Search(DateTime timeToSearch) {
+            public bool DFSSearch(DateTime timeToSearch) {
                 if(root == null) {
                     throw new Exception(ExceptionMessages.Common_IsNull_Failed);
                 }
@@ -121,26 +119,55 @@ namespace Utils {
 
                 while(currentNode != null || stack.GetCount() > 0) {
                     while(currentNode != null) {
-                        if(currentNode.GetValue() == timeToSearch) {
-                            return "Found the DateTime";
-                        }
                         stack.Push(currentNode);
                         currentNode = currentNode.left;
                     }
                     currentNode = stack.Pop();
-                    currentNode = currentNode.right;
 
                     if(currentNode != null) {
                         if(currentNode.GetValue() == timeToSearch) {
-                            return "Found the DateTime";
+                            return true;
                         }
                     }
 
+                    currentNode = currentNode.right;
+
                 }
-                return "Did not find the DateTime";
-                
+                return false;
+
             }
 
+            public bool BFSSearch(DateTime timeToSearch) {
+
+                if(root == null) { throw new Exception(ExceptionMessages.Common_IsNull_Failed); }
+
+                BSTNode? currentNode = root;
+
+                GenericQueue<BSTNode> queue = new GenericQueue<BSTNode>();
+                queue.Enqueue(currentNode);
+
+                while(queue.GetCount() > 0) {
+                    currentNode = queue.Dequeue();
+
+                    if(currentNode != null) {
+
+                        if(currentNode.GetValue().Equals(timeToSearch)) {
+                            return true;
+                        }
+
+                        if(currentNode.left != null) {
+                            queue.Enqueue(currentNode.left);
+                        }
+
+                        if(currentNode.right != null) {
+                            queue.Enqueue(currentNode.right);
+                        }
+                    }
+                }
+
+                return false;
+
+            }
         }
     }
 }

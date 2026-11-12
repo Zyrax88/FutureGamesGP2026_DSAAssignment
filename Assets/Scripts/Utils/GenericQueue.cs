@@ -16,8 +16,14 @@ public class GenericQueue<T>
         genericQueue.Add(item);
     }
 
-    public void Dequeue()
+    public T Dequeue()
     {
+        T temp = genericQueue[0];
         genericQueue.RemoveAt(0);
+        return temp;
+    }
+
+    public int GetCount() {
+        return genericQueue.Count;
     }
 }
